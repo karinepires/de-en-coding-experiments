@@ -1,0 +1,73 @@
+---
+title: "(De/En)coding Experiments"
+author: "Karine Pires"
+date: "2 Jul 2014"
+output: html_document
+---
+
+Initial Settings
+================
+
+## Movie File
+For the experiments I used initially [bigbuckbunny](www.bigbuckbunny.org) movie:  
+[http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4]
+
+## Programs
+I used ffmpeg on Mac:
+
+```{r, eval=FALSE}
+$ ffmpeg --version
+ffmpeg version 2.1 Copyright (c) 2000-2013 the FFmpeg developers
+  built on Jun 23 2014 16:17:10 with Apple LLVM version 5.1 (clang-503.0.40) (based on LLVM 3.4svn)
+```
+
+
+
+Decoding
+========
+
+Example of decoding:
+
+```{r, eval=FALSE}
+$ ffmpeg -i BigBuckBunny_320x180.mp4 -c:v rawvideo -pix_fmt yuv420p -vstats out.yuv
+```
+
+
+Options   | (from [ffmpeg manual](https://ffmpeg.org/ffmpeg.html))
+--------- | --------------------------------------------------------
+-i        | input file
+-c:v      | -
+-pix_fmt  | -
+-vstats   | Dump video coding statistics to 'vstats_HHMMSS.log'
+
+vstats dump sample:
+
+```{r, eval=FALSE}
+frame=     1 q= 0.0 f_size=  86400 s_size=       84kB time= 156.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     2 q= 0.0 f_size=  86400 s_size=      169kB time= 312.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     3 q= 0.0 f_size=  86400 s_size=      253kB time= 468.750 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     4 q= 0.0 f_size=  86400 s_size=      338kB time= 625.000 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     5 q= 0.0 f_size=  86400 s_size=      422kB time= 781.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     6 q= 0.0 f_size=  86400 s_size=      506kB time= 937.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     7 q= 0.0 f_size=  86400 s_size=      591kB time= 1093.750 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     8 q= 0.0 f_size=  86400 s_size=      675kB time= 1250.000 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     9 q= 0.0 f_size=  86400 s_size=      759kB time= 1406.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=    10 q= 0.0 f_size=  86400 s_size=      844kB time= 1562.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+```
+
+
+Encoding
+========
+
+## With H.264/MPEG-4 AVC = x264
+
+## With H.265/High Efficiency Video Coding (HEVC) = x265
+
+```{r, eval=FALSE}
+$ ffmpeg -i INPUT -c:a copy -x265-params crf=25 OUT.mov
+```
+
+
+
+
+
