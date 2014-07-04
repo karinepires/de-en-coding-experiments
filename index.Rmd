@@ -2,7 +2,11 @@
 title: "(De/En)coding Experiments"
 author: "Karine Pires"
 date: "2 Jul 2014"
-output: html_document
+output: 
+  html_document:
+    self_contained: false
+    includes:
+      after-body: forkme.html
 ---
 
 Initial Settings
@@ -29,7 +33,7 @@ Decoding
 Example of decoding:
 
 ```{r, eval=FALSE}
-$ ffmpeg -i BigBuckBunny_320x180.mp4 -c:v rawvideo -pix_fmt yuv420p -vstats out.yuv
+$ ffmpeg -i BigBuckBunny_320x180.mp4 -c:v rawvideo -pix_fmt yuv420p -vstats video2_320x180_60FPS_I420.yuv
 ```
 
 
@@ -61,9 +65,20 @@ Encoding
 
 ## With H.264/MPEG-4 AVC = x264
 
+Encoding from raw yuv to h264 with mmpeg:
+```{r, eval=FALSE}
+$ ffmpeg -f rawvideo -pix_fmt yuv420p -s:v 320x180 -r 60 -i video_320x180_60FPS_I420.yuv -c:v libx264 video.h264.mp4
+```
+
+And decoding the video to yuv for comparison:
+```{r, eval=FALSE}
+$ ffmpeg -i video.h264.mp4 -c:v rawvideo -pix_fmt yuv420p videoh264_320x180_60FPS_I420.yuv
+```
+
 ## With H.265/High Efficiency Video Coding (HEVC) = x265
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
+$ ffmpeg -i video2_320x180_60FPS_I420.yuv -c:a copy -x265-params crf=25 video_hecv.mov
 $ ffmpeg -i INPUT -c:a copy -x265-params crf=25 OUT.mov
 ```
 

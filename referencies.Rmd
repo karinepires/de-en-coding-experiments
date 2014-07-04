@@ -1,0 +1,47 @@
+http://bbb3d.renderfarming.net/download.html
+http://www.elementaltechnologies.com/resources/4k-test-sequences
+http://www.harmonicinc.com/resources/videos/4k-video-clip-center#4k-clip-center
+http://download.blender.org/durian/movies/ http://www.sintel.org/about/
+http://www.avsforum.com/forum/40-flat-panels-general-oled-technology/1500134-anyone-know-where-find-4k-test-files-not-youtube.html
+
+http://mewiki.project357.com/wiki/X264_Settings#input-res
+
+x264 --input-res 4000x2250 bbb_sunflower_native_60fps_normal.mp4 -B 1000 --vf resize:width=352,height=240,method=lanczos -o bbb_sunflower_native_60fps_224p.mkv
+
+http://dev.beandog.org/x264_preset_reference.html
+
+ffmpeg
+
+
+** decode **
+ffmpeg -i video.mp4 -c:v rawvideo -pix_fmt yuv420p out.yuv
+
+  Metadata:
+    major_brand     : isom
+    minor_version   : 1
+    compatible_brands: isomavc1
+    composer        : Sacha Goedegebure
+    title           : Big Buck Bunny, Sunflower version
+    artist          : Blender Foundation 2008, Janus Bager Kristensen 2013
+    comment         : Creative Commons Attribution 3.0 - http://bbb3d.renderfarming.net
+    genre           : Animation
+    encoder         : Lavf55.19.104
+    Stream #0:0(und): Video: rawvideo (I420 / 0x30323449), yuv420p, 4000x2250 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 90k tbn, 60 tbc (default)
+    Metadata:
+      creation_time   : 2013-12-24 11:10:47
+      handler_name    : GPAC ISO Video Handler
+
+
+** scale **
+ffmpeg -s:v 4000x2250 -r 60 -i out.yuv -vf scale=960:540 -c:v rawvideo -pix_fmt yuv420p out2.yuv
+
+ffmpeg -s:v 1920x1080 -r 25 -i input.yuv -vf scale=960:540 -c:v rawvideo -pix_fmt yuv420p out.yuv
+
+
+** encode **
+
+
+
+
+
+http://compression.ru/video/quality_measure/info_en.html#vqm
