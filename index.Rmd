@@ -4,7 +4,6 @@ author: "Karine Pires"
 date: "2 Jul 2014"
 output: 
   html_document:
-    self_contained: false
     includes:
       after-body: forkme.html
 ---
