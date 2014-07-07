@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>FFMPEG</title>
+
+<script src="inc/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="inc/bootstrap-2.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<link href="inc/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<script src="inc/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="inc/highlight/default.css"
+      type="text/css" />
+<script src="inc/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<div id="header">
+<h1 class="title">FFMPEG</h1>
+</div>
+
+
+<div id="version" class="section level1">
+<h1>Version</h1>
+<p>I used the following version of ffmpeg on MacOS:</p>
+<pre class="r"><code>$ ffmpeg --version
+ffmpeg version 2.1 Copyright (c) 2000-2013 the FFmpeg developers
+  built on Jun 23 2014 16:17:10 with Apple LLVM version 5.1 (clang-503.0.40) (based on LLVM 3.4svn)</code></pre>
+</div>
+<div id="decoding" class="section level1">
+<h1>Decoding</h1>
+<p>Example of decoding:</p>
+<pre class="r"><code>$ ffmpeg -i BigBuckBunny_320x180.mp4 -c:v rawvideo -pix_fmt yuv420p -vstats video2_320x180_60FPS_I420.yuv</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Options</th>
+<th align="left">(from <a href="https://ffmpeg.org/ffmpeg.html">ffmpeg manual</a>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">-i</td>
+<td align="left">input file</td>
+</tr>
+<tr class="even">
+<td align="left">-c:v</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">-pix_fmt</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">-vstats</td>
+<td align="left">Dump video coding statistics to ‘vstats_HHMMSS.log’</td>
+</tr>
+</tbody>
+</table>
+<p>vstats dump sample:</p>
+<pre class="r"><code>frame=     1 q= 0.0 f_size=  86400 s_size=       84kB time= 156.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     2 q= 0.0 f_size=  86400 s_size=      169kB time= 312.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     3 q= 0.0 f_size=  86400 s_size=      253kB time= 468.750 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     4 q= 0.0 f_size=  86400 s_size=      338kB time= 625.000 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     5 q= 0.0 f_size=  86400 s_size=      422kB time= 781.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     6 q= 0.0 f_size=  86400 s_size=      506kB time= 937.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     7 q= 0.0 f_size=  86400 s_size=      591kB time= 1093.750 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     8 q= 0.0 f_size=  86400 s_size=      675kB time= 1250.000 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=     9 q= 0.0 f_size=  86400 s_size=      759kB time= 1406.250 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I
+frame=    10 q= 0.0 f_size=  86400 s_size=      844kB time= 1562.500 br= 16588.8kbits/s avg_br=     4.4kbits/s type= I</code></pre>
+</div>
+<div id="encoding" class="section level1">
+<h1>Encoding</h1>
+<div id="with-h.264mpeg-4-avc-x264" class="section level2">
+<h2>With H.264/MPEG-4 AVC = x264</h2>
+<p>Encoding from raw yuv to h264 with mmpeg:</p>
+<pre class="r"><code>$ ffmpeg -f rawvideo -pix_fmt yuv420p -s:v 320x180 -r 60 -i video_320x180_60FPS_I420.yuv -c:v libx264 video.h264.mp4</code></pre>
+<p>And decoding the video to yuv for comparison:</p>
+<pre class="r"><code>$ ffmpeg -i video.h264.mp4 -c:v rawvideo -pix_fmt yuv420p videoh264_320x180_60FPS_I420.yuv</code></pre>
+</div>
+<div id="with-h.265high-efficiency-video-coding-hevc-x265" class="section level2">
+<h2>With H.265/High Efficiency Video Coding (HEVC) = x265</h2>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<ul>
+<li><a href="https://ffmpeg.org/ffmpeg.html">ffmpeg manual</a></li>
+</ul>
+</div>
+
+<!-- Fork me by https://github.com/blog/273-github-ribbons -->
+<a href="https://github.com/karinepires/de-en-coding-experiments"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with --self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
