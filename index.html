@@ -43,7 +43,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <body>
 
-<div class="container">
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
 
 
 <div id="header">
@@ -73,13 +80,19 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Metrics tools</h2>
 <div id="process-information" class="section level3">
 <h3>Process Information</h3>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/DTrace">DTrace</a></li>
+<li><a href="http://macperformanceguide.com/Mac-Monitoring-command-line.html">top, vm_stat, iostat</a> , <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man8/spindump.8.html">spindump</a></li>
+</ul>
 </div>
 <div id="video-quality-measurement" class="section level3">
 <h3>Video Quality Measurement</h3>
 <ul>
+<li><a href="http://superuser.com/questions/338725/compare-two-video-files-to-find-out-which-has-best-quality">Stack Overflow question about tools</a></li>
 <li><a href="http://compression.ru/video/quality_measure/video_measurement_tool_en.html">Russian Tool</a> windows, free version have no batch or command line, many QoE metrics</li>
 <li><a href="http://yuvtoolkit.com">yuvtoolkit</a> yuv reader, PSNR, MSE, open-source, comparison visualization</li>
 <li><a href="https://code.google.com/p/video-tester/">video-tester</a> video tester on python, open-source, does too much, as such streamer server</li>
+<li>(<a href="http://www.imagemagick.org/Usage/compare/">http://www.imagemagick.org/Usage/compare/</a>)</li>
 </ul>
 </div>
 </div>

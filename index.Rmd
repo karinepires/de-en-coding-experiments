@@ -33,3 +33,7 @@ See details for decoding and encoding video with [ffmpeg](./ffmpeg.html).
 * [yuvtoolkit](http://yuvtoolkit.com) yuv reader, PSNR, MSE, open-source, comparison visualization
 * [video-tester](https://code.google.com/p/video-tester/) video tester on python, open-source, does too much, as such streamer server
 * (http://www.imagemagick.org/Usage/compare/)
+
+
+### Others
+* https://support.xsplit.com/forum/viewtopic.php?f=3&t=13768
